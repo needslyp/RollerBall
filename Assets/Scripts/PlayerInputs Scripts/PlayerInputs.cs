@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 namespace RollerBall.Inputs {
@@ -7,8 +8,10 @@ namespace RollerBall.Inputs {
     [RequireComponent(typeof(PlayerMovement))]
     public class PlayerInputs : MonoBehaviour
     {
+        [SerializeField] private Transform cameraTransform;
         private Vector3 movement;
         private bool jump;
+        private bool stop;
         private PlayerMovement playerMovement;
         
         private void Awake()
@@ -18,12 +21,18 @@ namespace RollerBall.Inputs {
         
         void Update()
         {
-            float horizontal = Input.GetAxis(RollerBallInputs.HORIZONTAL_AXIS);
             float vertical = Input.GetAxis(RollerBallInputs.VERTICAL_AXIS);
 
             jump = Input.GetButton(RollerBallInputs.JUMP_BUTTON);
 
-            movement = new Vector3(horizontal,0, vertical).normalized;
+            stop = Input.GetKey(RollerBallInputs.STOP_BUTTON);
+
+            Vector3 forward = cameraTransform.forward;
+
+            forward.y = 0f;
+            forward.Normalize();
+
+            movement = forward * vertical;
         }
 
         private void FixedUpdate(){
@@ -31,6 +40,10 @@ namespace RollerBall.Inputs {
             
             if (jump && playerMovement.IsGrounded()) {
                 playerMovement.JumpCharacter();
+            }
+
+            if (stop && playerMovement.IsGrounded()) {
+                playerMovement.StopCharacter();
             }
         }
     }

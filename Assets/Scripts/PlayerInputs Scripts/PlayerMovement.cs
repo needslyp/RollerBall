@@ -7,7 +7,7 @@ namespace RollerBall.Inputs {
     [RequireComponent(typeof(Rigidbody))]
     public class PlayerMovement : MonoBehaviour
     {
-        [SerializeField, Range(0, 10)] private float speed = 2f;
+        [SerializeField, Range(0, 10)] private float speed = 4f;
         [SerializeField, Range(0, 20)] private float jumpPower = 10f;
         private Rigidbody playerRigidbody;
         private bool isGrounded = true;
@@ -32,6 +32,10 @@ namespace RollerBall.Inputs {
             isGrounded = false;
         }
 
+        public void StopCharacter(){
+            playerRigidbody.velocity = Vector3.zero;
+        }
+
         public bool IsGrounded(){
             return isGrounded;
         }
@@ -39,7 +43,7 @@ namespace RollerBall.Inputs {
     #if UNITY_EDITOR
         [ContextMenu("Reset values")]
         public void ResetValues(){
-            speed = 2f;
+            speed = 4f;
             jumpPower = 10f;
         }
     #endif

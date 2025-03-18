@@ -12,9 +12,20 @@ namespace RollerBall.Inputs {
         private Rigidbody playerRigidbody;
         private bool isGrounded = true;
 
+        private ParticleSystem deathBoom;
+
+        private ParticleSystem buttonBoom;
+        private MeshRenderer meshRenderer;
+
         private void Awake()
         {
             playerRigidbody = GetComponent<Rigidbody>();
+            
+            deathBoom = transform.Find("DeathBoom").GetComponent<ParticleSystem>();
+            buttonBoom = transform.Find("ButtonBoom").GetComponent<ParticleSystem>();
+
+            meshRenderer = GetComponent<MeshRenderer>();
+            meshRenderer.enabled = true;
         }
 
         private void OnCollisionEnter(Collision collision){
@@ -38,6 +49,31 @@ namespace RollerBall.Inputs {
 
         public bool IsGrounded(){
             return isGrounded;
+        }
+
+        public void PlayDeathEffect()
+        {
+            if (deathBoom != null)
+            {
+                deathBoom.Play();
+
+                Destroy(deathBoom.gameObject, deathBoom.main.duration);
+            }
+
+            if (meshRenderer != null)
+            {
+                meshRenderer.enabled = false;
+            }
+        }
+
+        public void PlayButtonEffect()
+        {
+            if (buttonBoom != null)
+            {
+                buttonBoom.Play();
+
+                Destroy(buttonBoom.gameObject, buttonBoom.main.duration);
+            }
         }
 
     #if UNITY_EDITOR

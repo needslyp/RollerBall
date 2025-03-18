@@ -1,3 +1,4 @@
+using UnityEditor.MPE;
 using UnityEngine;
 
 public class TriggerZone : MonoBehaviour
@@ -26,6 +27,9 @@ public class TriggerZone : MonoBehaviour
     void Update()
     {
         if (messageUI.activeSelf && Input.GetKey(RollerBallInputs.ACTION_BUTTON) && !isAnimate) {
+            RollerBall.Inputs.PlayerMovement player = GameObject.Find("Player").GetComponent<RollerBall.Inputs.PlayerMovement>();
+            player.PlayButtonEffect();
+            
             platformAnimator.SetTrigger("MovePlatform");
             messageUI.SetActive(false);
             isAnimate = true;

@@ -1,29 +1,27 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
-namespace RollerBall.Inputs {
+namespace PlayerInputs_Scripts {
     public class CameraMovement : MonoBehaviour
     {
         [SerializeField] private Transform playerTransform;
         [SerializeField, Range(0,400)] private float sensitivity = 300f;
-        private Vector3 cameraOffset;
-        private float rotationInput;
+        private Vector3 _cameraOffset;
+        private float _rotationInput;
 
         void Start()
         {
-            cameraOffset = transform.position - playerTransform.position;
+            _cameraOffset = transform.position - playerTransform.position;
         }
 
         void Update()
         {
-            rotationInput = Input.GetAxis(RollerBallInputs.HORIZONTAL_AXIS) * sensitivity * Time.deltaTime;
+            _rotationInput = Input.GetAxis(RollerBallInputs.HORIZONTAL_AXIS) * sensitivity * Time.deltaTime;
         }
 
         void FixedUpdate()
         {
-            cameraOffset = Quaternion.AngleAxis(rotationInput, Vector3.up) * cameraOffset;
-            transform.position = playerTransform.position + cameraOffset;
+            _cameraOffset = Quaternion.AngleAxis(_rotationInput, Vector3.up) * _cameraOffset;
+            transform.position = playerTransform.position + _cameraOffset;
             transform.LookAt(playerTransform.position);
         }   
     }

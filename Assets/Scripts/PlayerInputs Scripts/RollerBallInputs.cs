@@ -1,14 +1,15 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
-public class RollerBallInputs : MonoBehaviour
+namespace PlayerInputs_Scripts
 {
-    #region InputVariables
-    public const string HORIZONTAL_AXIS = "Horizontal";
-    public const string VERTICAL_AXIS = "Vertical";
-    public const string JUMP_BUTTON = "Jump";
-    public const string STOP_BUTTON = "q";
-    public const string ACTION_BUTTON = "e";
-    #endregion
+    public class RollerBallInputs : MonoBehaviour
+    {
+        #region InputVariables
+        public const string HORIZONTAL_AXIS = "Horizontal";
+        public const string VERTICAL_AXIS = "Vertical";
+        public const string JUMP_BUTTON = "Jump";
+        public const string STOP_BUTTON = "q";
+        public const string ACTION_BUTTON = "e";
+        #endregion
+    }
 }

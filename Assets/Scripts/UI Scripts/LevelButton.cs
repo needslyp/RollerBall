@@ -1,10 +1,13 @@
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class LevelButton : MonoBehaviour
+namespace UI_Scripts
 {
-    public void LoadLevel(int levelIndex)
+    public class LevelButton : MonoBehaviour
     {
-        SceneManager.LoadScene(levelIndex);
+        public void LoadLevel(int levelIndex)
+        {
+            SceneManager.LoadScene(levelIndex);
+        }
     }
 }

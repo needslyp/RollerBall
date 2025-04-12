@@ -4,16 +4,16 @@ using UnityEngine;
 
 public class ObstacleAnimationController : MonoBehaviour
 {
-    private Animator animator;
+    private Animator _animator;
 
     [SerializeField] private string[] trigers;
 
     void Start()
     {
-        animator = GetComponent<Animator>();
+        _animator = GetComponent<Animator>();
     }
 
     public void TriggerRandomAnimation(){
-        animator.SetTrigger(trigers[Random.Range(0, trigers.Length)]);
+        _animator.SetTrigger(trigers[Random.Range(0, trigers.Length)]);
     }
 }

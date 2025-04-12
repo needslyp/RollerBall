@@ -1,78 +1,76 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
-namespace RollerBall.Inputs {
+namespace PlayerInputs_Scripts {
     
     [RequireComponent(typeof(Rigidbody))]
     public class PlayerMovement : MonoBehaviour
     {
         [SerializeField, Range(0, 10)] private float speed = 4f;
         [SerializeField, Range(0, 20)] private float jumpPower = 10f;
-        private Rigidbody playerRigidbody;
-        private bool isGrounded = true;
+        private Rigidbody _playerRigidbody;
+        private bool _isGrounded = true;
 
-        private ParticleSystem deathBoom;
+        private ParticleSystem _deathBoom;
 
-        private ParticleSystem buttonBoom;
-        private MeshRenderer meshRenderer;
+        private ParticleSystem _buttonBoom;
+        private MeshRenderer _meshRenderer;
 
         private void Awake()
         {
-            playerRigidbody = GetComponent<Rigidbody>();
+            _playerRigidbody = GetComponent<Rigidbody>();
             
-            deathBoom = transform.Find("DeathBoom").GetComponent<ParticleSystem>();
-            buttonBoom = transform.Find("ButtonBoom").GetComponent<ParticleSystem>();
+            _deathBoom = transform.Find("DeathBoom").GetComponent<ParticleSystem>();
+            _buttonBoom = transform.Find("ButtonBoom").GetComponent<ParticleSystem>();
 
-            meshRenderer = GetComponent<MeshRenderer>();
-            meshRenderer.enabled = true;
+            _meshRenderer = GetComponent<MeshRenderer>();
+            _meshRenderer.enabled = true;
         }
 
         private void OnCollisionEnter(Collision collision){
             if (collision.gameObject.CompareTag("Ground")){
-                isGrounded = true;
+                _isGrounded = true;
             }
         }
 
         public void MoveCharacter(Vector3 movement){
-            playerRigidbody.AddForce(movement * speed);
+            _playerRigidbody.AddForce(movement * speed);
         }
 
         public void JumpCharacter(){
-            playerRigidbody.AddForce(Vector3.up * jumpPower, ForceMode.Impulse);
-            isGrounded = false;
+            _playerRigidbody.AddForce(Vector3.up * jumpPower, ForceMode.Impulse);
+            _isGrounded = false;
         }
 
         public void StopCharacter(){
-            playerRigidbody.velocity = Vector3.zero;
+            _playerRigidbody.velocity = Vector3.zero;
         }
 
         public bool IsGrounded(){
-            return isGrounded;
+            return _isGrounded;
         }
 
         public void PlayDeathEffect()
         {
-            if (deathBoom != null)
+            if (_deathBoom != null)
             {
-                deathBoom.Play();
+                _deathBoom.Play();
 
-                Destroy(deathBoom.gameObject, deathBoom.main.duration);
+                Destroy(_deathBoom.gameObject, _deathBoom.main.duration);
             }
 
-            if (meshRenderer != null)
+            if (_meshRenderer != null)
             {
-                meshRenderer.enabled = false;
+                _meshRenderer.enabled = false;
             }
         }
 
         public void PlayButtonEffect()
         {
-            if (buttonBoom != null)
+            if (_buttonBoom != null)
             {
-                buttonBoom.Play();
+                _buttonBoom.Play();
 
-                Destroy(buttonBoom.gameObject, buttonBoom.main.duration);
+                Destroy(_buttonBoom.gameObject, _buttonBoom.main.duration);
             }
         }
 

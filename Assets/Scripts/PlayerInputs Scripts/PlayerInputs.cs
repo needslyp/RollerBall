@@ -1,49 +1,46 @@
-using System.Collections;
-using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
 
-namespace RollerBall.Inputs {
+namespace PlayerInputs_Scripts {
     
     [RequireComponent(typeof(PlayerMovement))]
     public class PlayerInputs : MonoBehaviour
     {
         [SerializeField] private Transform cameraTransform;
-        private Vector3 movement;
-        private bool jump;
-        private bool stop;
-        private PlayerMovement playerMovement;
+        private Vector3 _movement;
+        private bool _jump;
+        private bool _stop;
+        private PlayerMovement _playerMovement;
         
         private void Awake()
         {
-            playerMovement = GetComponent<PlayerMovement>();
+            _playerMovement = GetComponent<PlayerMovement>();
         }
         
         void Update()
         {
-            float vertical = Input.GetAxis(RollerBallInputs.VERTICAL_AXIS);
+            var vertical = Input.GetAxis(RollerBallInputs.VERTICAL_AXIS);
 
-            jump = Input.GetButton(RollerBallInputs.JUMP_BUTTON);
+            _jump = Input.GetButton(RollerBallInputs.JUMP_BUTTON);
 
-            stop = Input.GetKey(RollerBallInputs.STOP_BUTTON);
+            _stop = Input.GetKey(RollerBallInputs.STOP_BUTTON);
 
             Vector3 forward = cameraTransform.forward;
 
             forward.y = 0f;
             forward.Normalize();
 
-            movement = forward * vertical;
+            _movement = forward * vertical;
         }
 
         private void FixedUpdate(){
-            playerMovement.MoveCharacter(movement);
+            _playerMovement.MoveCharacter(_movement);
             
-            if (jump && playerMovement.IsGrounded()) {
-                playerMovement.JumpCharacter();
+            if (_jump && _playerMovement.IsGrounded()) {
+                _playerMovement.JumpCharacter();
             }
 
-            if (stop && playerMovement.IsGrounded()) {
-                playerMovement.StopCharacter();
+            if (_stop && _playerMovement.IsGrounded()) {
+                _playerMovement.StopCharacter();
             }
         }
     }

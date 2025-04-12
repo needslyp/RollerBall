@@ -1,4 +1,4 @@
-using UnityEditor.MPE;
+using PlayerInputs_Scripts;
 using UnityEngine;
 
 public class TriggerZone : MonoBehaviour
@@ -6,11 +6,20 @@ public class TriggerZone : MonoBehaviour
     public GameObject messageUI;
     public Animator platformAnimator;
 
-    private bool isAnimate = false;
+    private bool _isAnimate = false;
+    private GameObject _gameObject;
+    private PlayerMovement _player;
+
+    private void Start()
+    {
+        _player = _gameObject.GetComponent<PlayerMovement>();
+        _gameObject = GameObject.Find("Player");
+    }
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.CompareTag("Player")){
+        if (other.CompareTag("Player"))
+        {
             messageUI.SetActive(true);
         }
     }
@@ -26,13 +35,12 @@ public class TriggerZone : MonoBehaviour
     // Animate Platform if player press action button
     void Update()
     {
-        if (messageUI.activeSelf && Input.GetKey(RollerBallInputs.ACTION_BUTTON) && !isAnimate) {
-            RollerBall.Inputs.PlayerMovement player = GameObject.Find("Player").GetComponent<RollerBall.Inputs.PlayerMovement>();
-            player.PlayButtonEffect();
+        if (messageUI.activeSelf && Input.GetKey(RollerBallInputs.ACTION_BUTTON) && !_isAnimate) {
+            _player.PlayButtonEffect();
             
             platformAnimator.SetTrigger("MovePlatform");
             messageUI.SetActive(false);
-            isAnimate = true;
+            _isAnimate = true;
         }
     }
 }
